@@ -5,7 +5,7 @@ import { MarkdownContent } from '@/components/blog/MarkdownContent';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 import { getAllPostSlugs, getPostBySlug } from '@/lib/blog';
 import type { Post } from '@/lib/blog';
-import { formatPageTitle, getSiteUrl } from '@/lib/config';
+import { getSiteUrl } from '@/lib/config';
 import { BlogSlugParamsSchema, parseRouteParams } from '@/lib/schemas';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -42,7 +42,7 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
   }
 
   return {
-    title: formatPageTitle(post.title),
+    title: post.title,
     description: post.metaDescription,
     openGraph: {
       title: post.title,

@@ -9,7 +9,6 @@ import {
   buildCityContext,
   buildCityDescription,
   buildCityHeadline,
-  formatPageTitle,
   formatPricingLabel,
   getAllCitySlugs,
   getCityBySlug,
@@ -51,10 +50,10 @@ export function generateMetadata({ params }: CityPageProps): Metadata {
   const title = buildCityHeadline(city, siteConfig);
 
   return {
-    title: formatPageTitle(title),
+    title,
     description: buildCityDescription(city, siteConfig),
     openGraph: {
-      title: formatPageTitle(title),
+      title,
       description: buildCityDescription(city, siteConfig),
       images: [{ url: siteConfig.seo.ogImage }],
     },

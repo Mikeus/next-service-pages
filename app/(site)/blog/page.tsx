@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { getAllPosts } from '@/lib/blog';
-import { formatPageTitle, siteConfig } from '@/lib/config';
+import { siteConfig } from '@/lib/config';
 import { BlogPostCard } from '@/components/blog/BlogPostCard';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
 export const metadata: Metadata = {
-  title: formatPageTitle('Blog'),
+  title: 'Blog',
   description: `Tips, guides, and local advice from ${siteConfig.businessName}.`,
 };
 

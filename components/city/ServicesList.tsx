@@ -14,7 +14,7 @@ export function ServicesList({ services, cityName, serviceType }: ServicesListPr
     <Section>
       <Container>
         <SectionHeading
-          title={`Our ${serviceType} services in ${cityName}`}
+          title={`Our ${serviceType} in ${cityName}`}
           description={`From routine maintenance to urgent repairs, our team covers everything you need in ${cityName}.`}
         />
         <ul className="grid gap-6 sm:grid-cols-2">

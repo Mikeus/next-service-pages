@@ -9,11 +9,13 @@ const inter = Inter({
   display: 'swap',
 });
 
+const businessName = siteConfig.businessName;
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: siteConfig.businessName,
-    template: siteConfig.seo.titleTemplate,
+    default: businessName,
+    template: '%s | ' + businessName,
   },
   description: siteConfig.seo.defaultDescription,
   openGraph: {

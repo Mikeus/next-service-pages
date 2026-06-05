@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { CitiesGrid } from '@/components/home/CitiesGrid';
 import { HomeHero } from '@/components/home/HomeHero';
-import { formatPageTitle, siteConfig } from '@/lib/config';
+import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: formatPageTitle('Home'),
+  title: 'Home',
   description: siteConfig.seo.defaultDescription,
 };
 
