@@ -1,0 +1,72 @@
+# Label definitions for next-service-pages
+# Sync manually or via a label-sync workflow.
+# https://github.com/EndBug/label-sync
+
+labels:
+  # Type
+  - name: bug
+    color: d73a4a
+    description: Something is not working
+
+  - name: enhancement
+    color: a2eeef
+    description: New feature or improvement
+
+  - name: documentation
+    color: 0075ca
+    description: Documentation only changes
+
+  - name: question
+    color: d876e3
+    description: Question or discussion
+
+  # Area
+  - name: ai
+    color: 1d76db
+    description: AI content automation and providers
+
+  - name: seo
+    color: 0e8a16
+    description: Local SEO pages, metadata, structured data
+
+  - name: config
+    color: fbca04
+    description: Site configuration and city setup
+
+  - name: booking
+    color: f9d0c4
+    description: Booking forms and API integrations
+
+  - name: dx
+    color: c5def5
+    description: Developer experience, tooling, and CI
+
+  # Priority
+  - name: priority-low
+    color: c2e0c6
+    description: Low priority
+
+  - name: priority-medium
+    color: fbca04
+    description: Medium priority
+
+  - name: priority-high
+    color: e99695
+    description: High priority
+
+  # Status
+  - name: good-first-issue
+    color: 7057ff
+    description: Good for newcomers
+
+  - name: help-wanted
+    color: 008672
+    description: Maintainer welcomes community contributions
+
+  - name: breaking-change
+    color: b60205
+    description: Introduces a breaking change
+
+  - name: pinned
+    color: 006b75
+    description: Pinned — exempt from stale bot
