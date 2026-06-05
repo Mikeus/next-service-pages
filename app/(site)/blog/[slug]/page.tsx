@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { MarkdownContent } from '@/components/blog/MarkdownContent';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 import { getAllPostSlugs, getPostBySlug } from '@/lib/blog';
+import type { Post } from '@/lib/blog';
 import { formatPageTitle, getSiteUrl } from '@/lib/config';
 import { BlogSlugParamsSchema, parseRouteParams } from '@/lib/schemas';
 import { Container } from '@/components/ui/Container';
@@ -21,7 +22,7 @@ function formatDate(date: string): string {
   });
 }
 
-function resolvePostParam(params: { slug: string }) {
+function resolvePostParam(params: { slug: string }): Post | null {
   const routeParams = parseRouteParams(BlogSlugParamsSchema, params);
   if (!routeParams) {
     return null;
@@ -53,7 +54,7 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
   };
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
+export default function BlogPostPage({ params }: BlogPostPageProps): React.JSX.Element {
   const post = resolvePostParam(params);
 
   if (!post) {

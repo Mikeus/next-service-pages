@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react';
+
 export default function SiteLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children: ReactNode;
+}>): ReactNode {
   return children;
 }

@@ -48,11 +48,15 @@ export const AIProviderConfigInputSchema = z.object({
 
 export type AIProviderConfigInput = z.infer<typeof AIProviderConfigInputSchema>;
 
-export function resolveAIProviderConfig(input: AIProviderConfigInput = {}): {
+export interface ResolvedAIProviderConfig {
   provider: 'openai' | 'anthropic';
   apiKey: string;
   model?: string;
-} {
+}
+
+export function resolveAIProviderConfig(
+  input: AIProviderConfigInput = {},
+): ResolvedAIProviderConfig {
   const env = getServerEnv();
   const parsed = AIProviderConfigInputSchema.parse(input);
   const provider = parsed.provider ?? env.AI_PROVIDER;

@@ -16,16 +16,17 @@ import {
   resolveCityFaqs,
   siteConfig,
 } from '@/lib/config';
+import type { CityConfig } from '@/lib/schemas';
 import { CitySlugParamsSchema, parseRouteParams } from '@/lib/schemas';
 
 type CityPageProps = {
   params: { city: string };
 };
 
-function resolveCityParam(params: { city: string }) {
+function resolveCityParam(params: { city: string }): CityConfig | undefined {
   const routeParams = parseRouteParams(CitySlugParamsSchema, params);
   if (!routeParams) {
-    return null;
+    return undefined;
   }
   return getCityBySlug(routeParams.city);
 }
@@ -60,7 +61,7 @@ export function generateMetadata({ params }: CityPageProps): Metadata {
   };
 }
 
-export default function CityPage({ params }: CityPageProps) {
+export default function CityPage({ params }: CityPageProps): React.JSX.Element {
   const city = resolveCityParam(params);
 
   if (!city) {

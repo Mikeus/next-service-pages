@@ -22,4 +22,5 @@ export {
   interpolateTemplate,
   resolveCityFaqs,
   type CityTemplateContext,
+  type ResolvedFaqItem,
 } from './city-helpers';

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: `Tips, guides, and local advice from ${siteConfig.businessName}.`,
 };
 
-export default function BlogPage() {
+export default function BlogPage(): React.JSX.Element {
   const posts = getAllPosts();
 
   return (

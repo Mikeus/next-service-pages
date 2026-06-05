@@ -1,18 +1,14 @@
+import type { ResolvedFaqItem } from '@/lib/config';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
 interface FAQSectionProps {
-  faqs: FAQItem[];
+  faqs: ResolvedFaqItem[];
   cityName: string;
 }
 
-export function FAQSection({ faqs, cityName }: FAQSectionProps) {
+export function FAQSection({ faqs, cityName }: FAQSectionProps): React.JSX.Element {
   return (
     <Section>
       <Container>

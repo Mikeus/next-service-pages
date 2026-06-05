@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: siteConfig.seo.defaultDescription,
 };
 
-export default function HomePage() {
+export default function HomePage(): React.JSX.Element {
   const { businessName, serviceType, phone, serviceArea, seo, features } = siteConfig;
 
   return (

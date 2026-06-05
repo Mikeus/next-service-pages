@@ -13,6 +13,11 @@ export interface CityTemplateContext {
   phone: string;
 }
 
+export interface ResolvedFaqItem {
+  question: string;
+  answer: string;
+}
+
 export function getCityBySlug(
   slug: string,
   config: ServiceConfig = siteConfig,
@@ -49,10 +54,7 @@ export function interpolateTemplate(template: string, context: CityTemplateConte
   });
 }
 
-export function resolveCityFaqs(
-  faqs: FAQEntry[],
-  context: CityTemplateContext,
-): Array<{ question: string; answer: string }> {
+export function resolveCityFaqs(faqs: FAQEntry[], context: CityTemplateContext): ResolvedFaqItem[] {
   return faqs.map((faq) => ({
     question: interpolateTemplate(faq.question, context),
     answer: interpolateTemplate(faq.answer, context),
