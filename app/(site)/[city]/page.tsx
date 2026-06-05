@@ -16,10 +16,19 @@ import {
   resolveCityFaqs,
   siteConfig,
 } from '@/lib/config';
+import { CitySlugParamsSchema, parseRouteParams } from '@/lib/schemas';
 
 type CityPageProps = {
   params: { city: string };
 };
+
+function resolveCityParam(params: { city: string }) {
+  const routeParams = parseRouteParams(CitySlugParamsSchema, params);
+  if (!routeParams) {
+    return null;
+  }
+  return getCityBySlug(routeParams.city);
+}
 
 export function generateStaticParams(): Array<{ city: string }> {
   if (!siteConfig.features.cityPages) {
@@ -30,7 +39,7 @@ export function generateStaticParams(): Array<{ city: string }> {
 }
 
 export function generateMetadata({ params }: CityPageProps): Metadata {
-  const city = getCityBySlug(params.city);
+  const city = resolveCityParam(params);
 
   if (!city) {
     return {
@@ -52,7 +61,7 @@ export function generateMetadata({ params }: CityPageProps): Metadata {
 }
 
 export default function CityPage({ params }: CityPageProps) {
-  const city = getCityBySlug(params.city);
+  const city = resolveCityParam(params);
 
   if (!city) {
     notFound();

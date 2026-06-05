@@ -1,58 +1,20 @@
-export interface CityConfig {
-  slug: string;
-  name: string;
-  county?: string;
-  lat?: number;
-  lng?: number;
-}
+import {
+  mergeServiceConfig,
+  parseServiceConfig,
+  type ServiceConfig,
+  type ServiceConfigOverrides,
+} from '@/lib/schemas';
 
-export interface ServiceOffering {
-  title: string;
-  description: string;
-}
+export type {
+  CityConfig,
+  FAQEntry,
+  ServiceConfig,
+  ServiceConfigOverrides,
+  ServiceOffering,
+  WhyUsPoint,
+} from '@/lib/schemas';
 
-export interface WhyUsPoint {
-  title: string;
-  description: string;
-}
-
-export interface FAQEntry {
-  question: string;
-  answer: string;
-}
-
-export interface ServiceConfig {
-  businessName: string;
-  serviceType: string;
-  serviceVerb: string;
-  phone: string;
-  email: string;
-  serviceArea: {
-    primaryCity: string;
-    state: string;
-    cities: CityConfig[];
-  };
-  pricing?: {
-    startingAt: number;
-    currency: string;
-    unit: string;
-  };
-  seo: {
-    titleTemplate: string;
-    defaultDescription: string;
-    ogImage: string;
-  };
-  features: {
-    aiBlog: boolean;
-    onlineBooking: boolean;
-    cityPages: boolean;
-  };
-  services: ServiceOffering[];
-  whyUs: WhyUsPoint[];
-  faqs: FAQEntry[];
-}
-
-export const defaultConfig: ServiceConfig = {
+const rawDefaultConfig = {
   businessName: 'Summit Local Services',
   serviceType: 'home services',
   serviceVerb: 'service professional',
@@ -80,7 +42,7 @@ export const defaultConfig: ServiceConfig = {
     ogImage: '/og-default.jpg',
   },
   features: {
-    aiBlog: false,
+    aiBlog: true,
     onlineBooking: true,
     cityPages: true,
   },
@@ -143,37 +105,13 @@ export const defaultConfig: ServiceConfig = {
         'We cover {{cityName}} and all nearby communities in {{county}} County. Call {{phone}} to confirm service at your address.',
     },
   ],
-};
+} satisfies ServiceConfig;
 
-type ServiceConfigOverrides = Partial<Omit<ServiceConfig, 'serviceArea' | 'seo' | 'features'>> & {
-  serviceArea?: Partial<ServiceConfig['serviceArea']>;
-  seo?: Partial<ServiceConfig['seo']>;
-  features?: Partial<ServiceConfig['features']>;
-};
+export const defaultConfig: ServiceConfig = parseServiceConfig(rawDefaultConfig);
 
 export function createServiceConfig(overrides: ServiceConfigOverrides = {}): ServiceConfig {
-  return {
-    ...defaultConfig,
-    ...overrides,
-    serviceArea: {
-      ...defaultConfig.serviceArea,
-      ...overrides.serviceArea,
-      cities: overrides.serviceArea?.cities ?? defaultConfig.serviceArea.cities,
-    },
-    seo: {
-      ...defaultConfig.seo,
-      ...overrides.seo,
-    },
-    features: {
-      ...defaultConfig.features,
-      ...overrides.features,
-    },
-    pricing: overrides.pricing ?? defaultConfig.pricing,
-    services: overrides.services ?? defaultConfig.services,
-    whyUs: overrides.whyUs ?? defaultConfig.whyUs,
-    faqs: overrides.faqs ?? defaultConfig.faqs,
-  };
+  return mergeServiceConfig(defaultConfig, overrides);
 }
 
 /** Active site configuration — override via createServiceConfig() for client projects. */
-export const siteConfig = defaultConfig;
+export const siteConfig: ServiceConfig = defaultConfig;

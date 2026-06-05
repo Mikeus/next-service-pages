@@ -1,4 +1,5 @@
-import type { CityConfig, FAQEntry, ServiceConfig } from './site.config';
+import type { CityConfig, FAQEntry, ServiceConfig } from '@/lib/schemas';
+import { getClientEnv } from '@/lib/schemas';
 import { siteConfig } from './site.config';
 
 export interface CityTemplateContext {
@@ -67,7 +68,7 @@ export function capitalizeServiceType(serviceType: string): string {
 }
 
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  return getClientEnv().NEXT_PUBLIC_SITE_URL;
 }
 
 export function formatPricingLabel(config: ServiceConfig): string | undefined {
