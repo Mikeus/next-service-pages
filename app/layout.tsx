@@ -1,13 +1,26 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { getSiteUrl, siteConfig } from '@/lib/config';
 import './globals.css';
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
-    default: 'Next Service Pages',
-    template: '%s | Next Service Pages',
+    default: siteConfig.businessName,
+    template: siteConfig.seo.titleTemplate,
   },
-  description:
-    'Production-ready Next.js starter for multi-city local service business websites.',
+  description: siteConfig.seo.defaultDescription,
+  openGraph: {
+    title: siteConfig.businessName,
+    description: siteConfig.seo.defaultDescription,
+    images: [{ url: siteConfig.seo.ogImage }],
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -17,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${inter.className} bg-white text-slate-900 antialiased`}>{children}</body>
     </html>
   );
 }

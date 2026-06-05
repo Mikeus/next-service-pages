@@ -1,32 +1,92 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { CallToAction } from '@/components/city/CallToAction';
+import { CityHero } from '@/components/city/CityHero';
+import { FAQSection } from '@/components/city/FAQSection';
+import { ServicesList } from '@/components/city/ServicesList';
+import { WhyUsSection } from '@/components/city/WhyUsSection';
+import {
+  buildCityContext,
+  buildCityDescription,
+  buildCityHeadline,
+  formatPageTitle,
+  formatPricingLabel,
+  getAllCitySlugs,
+  getCityBySlug,
+  resolveCityFaqs,
+  siteConfig,
+} from '@/lib/config';
 
 type CityPageProps = {
   params: { city: string };
 };
 
+export function generateStaticParams(): Array<{ city: string }> {
+  if (!siteConfig.features.cityPages) {
+    return [];
+  }
+
+  return getAllCitySlugs(siteConfig).map((city) => ({ city }));
+}
+
 export function generateMetadata({ params }: CityPageProps): Metadata {
-  const cityName = formatCitySlug(params.city);
+  const city = getCityBySlug(params.city);
+
+  if (!city) {
+    return {
+      title: 'City Not Found',
+    };
+  }
+
+  const title = buildCityHeadline(city, siteConfig);
 
   return {
-    title: `${cityName} Services`,
-    description: `Professional local services in ${cityName}.`,
+    title: formatPageTitle(title),
+    description: buildCityDescription(city, siteConfig),
+    openGraph: {
+      title: formatPageTitle(title),
+      description: buildCityDescription(city, siteConfig),
+      images: [{ url: siteConfig.seo.ogImage }],
+    },
   };
 }
 
-function formatCitySlug(slug: string): string {
-  return slug
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
 export default function CityPage({ params }: CityPageProps) {
-  const cityName = formatCitySlug(params.city);
+  const city = getCityBySlug(params.city);
+
+  if (!city) {
+    notFound();
+  }
+
+  const context = buildCityContext(city, siteConfig);
+  const faqs = resolveCityFaqs(siteConfig.faqs, context);
+  const pricingLabel = formatPricingLabel(siteConfig);
 
   return (
     <main>
-      <h1>Services in {cityName}</h1>
-      <p>City SEO page placeholder — content and components coming in a future phase.</p>
+      <CityHero
+        headline={buildCityHeadline(city, siteConfig)}
+        subheadline={buildCityDescription(city, siteConfig)}
+        phone={siteConfig.phone}
+        pricingLabel={pricingLabel}
+      />
+      <ServicesList
+        services={siteConfig.services}
+        cityName={city.name}
+        serviceType={siteConfig.serviceType}
+      />
+      <WhyUsSection
+        points={siteConfig.whyUs}
+        businessName={siteConfig.businessName}
+        cityName={city.name}
+      />
+      <FAQSection faqs={faqs} cityName={city.name} />
+      <CallToAction
+        businessName={siteConfig.businessName}
+        cityName={city.name}
+        phone={siteConfig.phone}
+        serviceVerb={siteConfig.serviceVerb}
+      />
     </main>
   );
 }
